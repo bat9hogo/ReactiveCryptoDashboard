@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: Crypto
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/crypto_db
+  profiles:
+    active: dev
+
+app:
+  symbols:
+    - BTCUSDT
+    - ETHUSDT
+  base-url: https://api.binance.com
+  update-interval: 3

@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongo_crypto
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - crypto-network
+    environment:
+      MONGO_INITDB_DATABASE: crypto_db
+
+volumes:
+  mongo_data:
+    driver: local
+
+networks:
+  crypto-network:
+    driver: bridge
