@@ -13,9 +13,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @Builder
 public class User {
+
     @Id
     private String id;
 
     private String username;
     private String password;
+
+    // Добавим метод для получения роли (если потребуется)
+    private String role = "USER"; // По умолчанию роль "USER"
+
+    // Если нужны дополнительные аттрибуты, например, email, то можно добавить:
+    // private String email;
+
+    // Стандартные геттеры и сеттеры генерируются автоматически благодаря аннотации @Data от Lombok
 }

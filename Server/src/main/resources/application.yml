@@ -4,9 +4,12 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://localhost:27017/crypto_db
-  profiles:
-    active: dev
+      uri: mongodb://localhost:27017/crypto_db  # Одна база данных для всех данных
+    profiles:
+      active: dev
+
+jwt:
+  secret: aaa336942514336942514aaa33694251412
 
 app:
   symbols:

@@ -1,9 +1,8 @@
 package crypto.repository;
 
 import crypto.model.User;
-import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
-import reactor.core.publisher.Mono;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface UserRepository extends ReactiveMongoRepository<User, String> {
-    Mono<User> findByUsername(String username);
+public interface UserRepository extends MongoRepository<User, String> {
+    User findByUsername(String username);  // Метод для поиска пользователя по имени
 }
