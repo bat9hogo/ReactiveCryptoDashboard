@@ -20,7 +20,6 @@ public class JwtReactiveAuthenticationManager implements ReactiveAuthenticationM
         String authToken = authentication.getCredentials().toString();
         if (jwtTokenProvider.validateToken(authToken)) {
             String username = jwtTokenProvider.getUsername(authToken);
-            // Возвращаем аутентифицированного пользователя
             return Mono.just(
                     new UsernamePasswordAuthenticationToken(username, null, Collections.emptyList())
             );

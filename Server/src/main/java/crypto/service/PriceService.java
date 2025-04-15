@@ -59,23 +59,7 @@ public class PriceService {
                 });
     }
 
-//    Mono<PriceData> saveAndUpdate(PriceData data) {
-//        latestPrices.put(data.getSymbol(), data);
-//        return repository.findAll()
-//                .count()  // Получаем количество записей в базе
-//                .flatMap(count -> {
-//                    if (count >= 10) {  // Если записей больше или равно 1000
-//                        log.info("Too many records, deleting oldest ones...");
-//                        // Удаляем старые записи
-//                        return repository.deleteAll()  // Удаляем все записи
-//                                .then(repository.save(data)); // Сохраняем новую запись
-//                    }
-//                    return repository.save(data); // Если количество меньше 1000, сохраняем запись
-//                });
-//    }
-
     Mono<PriceData> saveAndUpdate(PriceData data) {
-        // Удаление старых записей, если их количество превышает лимит
         return repository.count()
                 .flatMap(count -> {
                     if (count >= MAX_RECORDS) {
@@ -88,36 +72,16 @@ public class PriceService {
     }
 
     private Mono<Void> deleteOldRecords(int numberOfRecords) {
-        // Удаляем самые старые записи
         return repository.findAll()
-                .take(numberOfRecords)  // Берем только нужное количество старых записей
+                .take(numberOfRecords)
                 .flatMap(repository::delete)
-                .then();  // Завершаем метод без возвращаемого значения
+                .then();
     }
 
     private Mono<PriceData> savePriceData(PriceData data) {
         latestPrices.put(data.getSymbol(), data);
         return repository.save(data);
     }
-
-//    private Mono<PriceData> savePriceData(PriceData data) {
-//        // Выводим в консоль перед сохранением
-//        System.out.println("Attempting to save price data: " + data);
-//
-//        // Сохраняем данные
-//        latestPrices.put(data.getSymbol(), data);
-//
-//        return repository.save(data)
-//                .doOnSuccess(savedData -> {
-//                    // Выводим в консоль после успешного сохранения
-//                    System.out.println("Successfully saved price data: " + savedData);
-//                })
-//                .doOnError(error -> {
-//                    // Выводим в консоль при ошибке
-//                    System.err.println("Error saving price data: " + error.getMessage());
-//                });
-//    }
-
 
     public Flux<PriceData> streamPrices() {
         return Flux.fromIterable(latestPrices.values());
@@ -127,12 +91,11 @@ public class PriceService {
         return Mono.justOrEmpty(latestPrices.get(symbol));
     }
 
-    // Добавим методы, которые были вызваны в контроллере:
     public Flux<PriceData> getAllPrices() {
         return repository.findAll();
     }
 
     public Flux<PriceData> getPriceBySymbol(String symbol) {
-        return repository.findBySymbol(symbol);  // Возвращает все записи с данным символом
+        return repository.findBySymbol(symbol);
     }
 }

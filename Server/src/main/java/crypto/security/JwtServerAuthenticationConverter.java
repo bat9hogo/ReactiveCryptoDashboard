@@ -20,7 +20,6 @@ public class JwtServerAuthenticationConverter implements ServerAuthenticationCon
         String authHeader = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String authToken = authHeader.substring(7);
-            // Здесь создаем Authentication с токеном как credential, чтобы потом менеджер его проверил
             return Mono.just(new UsernamePasswordAuthenticationToken(null, authToken));
         }
         return Mono.empty();

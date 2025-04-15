@@ -38,6 +38,9 @@ public class UserService implements UserDetailsService {
     // Метод для регистрации нового пользователя
     public void registerUser(String username, String password) {
         // Хэшируем пароль перед сохранением
+        if (userRepository.findByUsername(username) != null) {
+            throw new RuntimeException("User already exists with username: " + username);
+        }
         String encodedPassword = passwordEncoder.encode(password);
 
         User user = new User();

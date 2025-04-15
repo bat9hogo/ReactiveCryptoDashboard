@@ -19,7 +19,7 @@ public class WebSocketConfig {
         map.put("/ws/prices", handler);
 
         SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
-        mapping.setOrder(10); // Порядок, если есть другие маппинги
+        mapping.setOrder(10);
         mapping.setUrlMap(map);
         return mapping;
     }

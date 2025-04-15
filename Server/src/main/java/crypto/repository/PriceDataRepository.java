@@ -10,7 +10,6 @@ import java.time.Instant;
 
 @Repository
 public interface PriceDataRepository extends ReactiveMongoRepository<PriceData, String> {
-    // Здесь можно будет добавить кастомные reactive-запросы при необходимости
     Flux<PriceData> findBySymbol(String symbol);
 
     Mono<Void> deleteByTimestampBefore(Instant timestamp);

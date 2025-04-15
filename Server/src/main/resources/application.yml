@@ -4,7 +4,7 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://localhost:27017/crypto_db  # Одна база данных для всех данных
+      uri: mongodb://localhost:27017/crypto_db
     profiles:
       active: dev
 

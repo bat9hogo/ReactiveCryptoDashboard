@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("users")
@@ -17,14 +18,11 @@ public class User {
     @Id
     private String id;
 
+    @Indexed(unique = true)
     private String username;
     private String password;
 
-    // Добавим метод для получения роли (если потребуется)
-    private String role = "USER"; // По умолчанию роль "USER"
 
-    // Если нужны дополнительные аттрибуты, например, email, то можно добавить:
-    // private String email;
+    private String role = "USER";
 
-    // Стандартные геттеры и сеттеры генерируются автоматически благодаря аннотации @Data от Lombok
 }

@@ -18,7 +18,7 @@ public class JwtTokenProvider {
     @Value("${jwt.secret}")
     private String SECRET;
     private SecretKey secretKey;
-    private final long EXPIRATION_TIME = 3600000; // 1 час
+    private final long EXPIRATION_TIME = 3600000;
 
     @PostConstruct
     public void init() {

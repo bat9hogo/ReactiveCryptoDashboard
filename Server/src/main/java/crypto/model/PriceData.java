@@ -20,9 +20,9 @@ public class PriceData {
     @Id
     private String id;
 
-    private String symbol;         // Например, BTCUSDT
+    private String symbol;
 
-    private BigDecimal price;      // Текущая цена
+    private BigDecimal price;
 
-    private Instant timestamp;     // Время получения цены
+    private Instant timestamp;
 }
