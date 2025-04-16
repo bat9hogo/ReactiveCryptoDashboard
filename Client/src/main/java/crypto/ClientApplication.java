@@ -17,7 +17,7 @@ public class ClientApplication extends SpringBootServletInitializer implements C
 
 	@Override
 	public void run(String... args) {
-		openInBrowser("http://localhost:8081/index.html");
+		openInBrowser("http://localhost:8081/login.html");
 	}
 
 	private void openInBrowser(String url) {

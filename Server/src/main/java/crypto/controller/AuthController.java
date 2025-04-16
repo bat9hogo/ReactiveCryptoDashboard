@@ -7,6 +7,7 @@ import crypto.service.UserService;
 import crypto.util.LoginRequest;
 import crypto.util.RegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,11 +30,25 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+//    @PostMapping("/register")
+//    public Mono<String> register(@RequestBody RegisterRequest registerRequest) {
+//        return Mono.fromRunnable(() -> {
+//            userService.registerUser(registerRequest.getUsername(), registerRequest.getPassword());
+//        }).thenReturn("User registered successfully!");
+//    }
+
     @PostMapping("/register")
-    public Mono<String> register(@RequestBody RegisterRequest registerRequest) {
+    public Mono<ResponseEntity<String>> register(@RequestBody RegisterRequest registerRequest) {
         return Mono.fromRunnable(() -> {
-            userService.registerUser(registerRequest.getUsername(), registerRequest.getPassword());
-        }).thenReturn("User registered successfully!");
+                    userService.registerUser(registerRequest.getUsername(), registerRequest.getPassword());
+                })
+                .then(Mono.just(ResponseEntity.ok("Регистрация прошла успешно!")))
+                .onErrorResume(e -> {
+                    // Логируем полное исключение, если нужно
+                    System.err.println("Ошибка регистрации: " + e.getMessage());
+                    return Mono.just(ResponseEntity.badRequest()
+                            .body("Ошибка регистрации: " + e.getMessage()));
+                });
     }
 
     @PostMapping("/login")

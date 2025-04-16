@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!jwtToken) {
         alert("Вы не авторизованы! Перенаправление на страницу входа.");
-        window.location.href = "index.html";
+        window.location.href = "login.html";
         return;
     }
 
@@ -49,6 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     logoutBtn.addEventListener("click", () => {
         localStorage.removeItem("jwtToken");
-        window.location.href = "index.html";
+        window.location.href = "login.html";
     });
 });
