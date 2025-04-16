@@ -1,72 +1,136 @@
+/* Сброс всех стандартных отступов и размеров */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Основные стили для тела страницы */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background: linear-gradient(135deg, #eceff1, #ffffff); /* Мягкий градиентный фон */
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    overflow: hidden;
 }
 
+/* Контейнер для формы */
 .auth-container {
     background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    width: 320px;
     text-align: center;
+    transition: transform 0.3s ease-in-out;
 }
 
+/* Эффект наведения на контейнер */
+.auth-container:hover {
+    transform: translateY(-5px);
+}
+
+/* Заголовок формы */
 .auth-container h2 {
     margin-bottom: 20px;
-    font-size: 24px;
+    font-size: 26px;
+    color: #333;
+    font-weight: 600;
 }
 
+/* Стиль для всех элементов формы */
 .input-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     text-align: left;
 }
 
 .input-group label {
     font-size: 14px;
+    font-weight: 500;
+    color: #555;
     display: block;
 }
 
 .input-group input {
     width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border-radius: 4px;
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 8px;
     border: 1px solid #ccc;
+    font-size: 14px;
+    color: #333;
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Эффект фокуса на полях ввода */
+.input-group input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+/* Кнопка "Войти" */
+.btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Эффект наведения на кнопку */
+.btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+}
+
+/* Сообщение об ошибке */
+#loginError {
+    color: red;
+    margin-top: 10px;
     font-size: 14px;
 }
 
-.btn {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    border: none;
-    border-radius: 4px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.btn:hover {
-    background-color: #0056b3;
-}
-
+/* Текст с ссылкой на регистрацию */
 p {
     margin-top: 20px;
     font-size: 14px;
+    color: #555;
 }
 
+/* Стилизация ссылки */
 a {
     color: #007bff;
     text-decoration: none;
+    font-weight: 500;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Мобильная адаптивность */
+@media (max-width: 480px) {
+    .auth-container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .auth-container h2 {
+        font-size: 22px;
+    }
+
+    .btn {
+        font-size: 14px;
+    }
+
+    .input-group input {
+        font-size: 16px;
+    }
 }

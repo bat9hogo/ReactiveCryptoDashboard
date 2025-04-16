@@ -1,10 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Крипто цены</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="pricestyle.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Подключаем Chart.js -->
     <style>
+        /* Стили для страницы */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+        }
+
+        header {
+            padding: 20px;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+        }
+
+        .charts-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .chart-wrapper {
+            width: 48%;
+            height: 300px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
         .price-table {
             width: 80%;
             margin: 20px auto;
@@ -36,10 +67,34 @@
         .logout-btn:hover {
             background-color: #c9302c;
         }
+
+        /* Дополнительные стили для отзывчивости */
+        @media (max-width: 768px) {
+            .charts-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .chart-wrapper {
+                width: 90%;
+                margin-bottom: 20px;
+            }
+        }
     </style>
 </head>
 <body>
-<h1 style="text-align:center;">Цены в реальном времени</h1>
+<header>
+    <h1>Крипто цены в реальном времени</h1>
+</header>
+
+<div class="charts-container">
+    <div class="chart-wrapper">
+        <canvas id="cryptoPriceChart"></canvas>
+    </div>
+    <div class="chart-wrapper">
+        <canvas id="volumeChart"></canvas>
+    </div>
+</div>
 
 <table class="price-table">
     <thead>
@@ -49,8 +104,7 @@
         <th>Время</th>
     </tr>
     </thead>
-    <tbody id="priceTableBody">
-    </tbody>
+    <tbody id="priceTableBody"></tbody>
 </table>
 
 <button class="logout-btn" id="logoutBtn">Выйти</button>
