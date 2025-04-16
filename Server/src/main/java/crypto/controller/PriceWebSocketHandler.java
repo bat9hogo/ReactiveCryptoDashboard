@@ -14,29 +14,29 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Component
-@RequiredArgsConstructor
 @Slf4j
 public class PriceWebSocketHandler implements WebSocketHandler {
 
     private final PriceService priceService;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    public PriceWebSocketHandler(PriceService priceService) {
+        this.priceService = priceService;
+    }
 
     @Override
     public Mono<Void> handle(WebSocketSession session) {
         Flux<WebSocketMessage> messageFlux = priceService.streamPrices()
+                .doOnSubscribe(subscription -> System.out.println("WebSocket connection established"))
+                .doOnNext(price -> System.out.println("Sending price: " + price))
                 .map(this::toJson)
                 .map(session::textMessage)
-                .doOnError(error -> log.error("WebSocket error", error));
+                .doOnError(error -> System.out.println("WebSocket error: " + error.getMessage()))
+                .doOnComplete(() -> System.out.println("WebSocket connection closed"));
 
         return session.send(messageFlux);
     }
 
     private String toJson(PriceData priceData) {
-        try {
-            return objectMapper.writeValueAsString(priceData);
-        } catch (JsonProcessingException e) {
-            log.error("Error serializing PriceData", e);
-            return "{}";
-        }
+        return "{\"symbol\": \"" + priceData.getSymbol() + "\", \"price\": " + priceData.getPrice() + "}";
     }
 }

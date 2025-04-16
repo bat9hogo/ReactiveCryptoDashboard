@@ -29,7 +29,7 @@ public class PriceService {
     @Value("${app.symbols:BTCUSDT,ETHUSDT}")
     private String[] symbols;
 
-    private static final int MAX_RECORDS = 1000;
+    private static final int MAX_RECORDS = 500;
     private static final int RECORDS_TO_DELETE = 2;
 
     @PostConstruct
@@ -38,6 +38,7 @@ public class PriceService {
                 .flatMap(tick -> Flux.fromArray(symbols))
                 .flatMap(this::fetchPrice)
                 .flatMap(this::saveAndUpdate)
+                .doOnNext(data -> System.out.println("Price updated: " + data))
                 .subscribe(
                         data -> log.info("Price updated: {}", data),
                         error -> log.error("Error fetching price", error)

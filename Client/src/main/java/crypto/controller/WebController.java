@@ -8,6 +8,6 @@ public class WebController {
 
     @GetMapping("/")
     public String index() {
-        return "index.html";  // Возвращаем страницу index.html из папки static
+        return "index.html";
     }
 }

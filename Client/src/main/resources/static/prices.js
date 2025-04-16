@@ -32,10 +32,8 @@ document.addEventListener("DOMContentLoaded", () => {
         row.appendChild(priceCell);
         row.appendChild(timeCell);
 
-        // Добавляем новую строку в начало таблицы
         tableBody.prepend(row);
 
-        // Ограничим таблицу последними 20 записями
         if (tableBody.rows.length > 20) {
             tableBody.deleteRow(-1);
         }

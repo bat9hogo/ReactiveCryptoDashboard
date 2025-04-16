@@ -22,20 +22,17 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // Ищем пользователя в базе данных
         User user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found with username: " + username);
         }
 
-        // Строим объект UserDetails с помощью найденного пользователя
         UserBuilder builder = org.springframework.security.core.userdetails.User.withUsername(user.getUsername());
         builder.password(user.getPassword());
-        builder.roles(user.getRole()); // Используем роль пользователя из базы данных
+        builder.roles(user.getRole());
         return builder.build();
     }
 
-    // Метод для регистрации нового пользователя
     public void registerUser(String username, String password) {
         // Хэшируем пароль перед сохранением
         if (userRepository.findByUsername(username) != null) {

@@ -39,6 +39,7 @@ public class SecurityConfig {
                 .authorizeExchange(exchanges -> exchanges
                         .pathMatchers("/auth/login", "/auth/register").permitAll()
                         .pathMatchers("/api/prices", "/api/prices/*").permitAll()
+                        .pathMatchers("/ws/prices").permitAll()
                         .anyExchange().authenticated()
                 )
                 .securityContextRepository(NoOpServerSecurityContextRepository.getInstance())

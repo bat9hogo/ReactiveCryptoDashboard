@@ -20,8 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (response.ok) {
                 const data = await response.json();
-                localStorage.setItem("jwtToken", data.token);  // сохраняем токен
-                window.location.href = "prices.html";          // переходим к отображению цен
+                localStorage.setItem("jwtToken", data.token);
+                window.location.href = "prices.html";
             } else {
                 const errorText = await response.text();
                 alert("Ошибка входа: " + errorText);
