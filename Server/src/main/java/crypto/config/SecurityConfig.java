@@ -13,6 +13,9 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter;
 import org.springframework.security.web.server.context.NoOpServerSecurityContextRepository;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsWebFilter;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebFluxSecurity
@@ -39,7 +42,8 @@ public class SecurityConfig {
                         .anyExchange().authenticated()
                 )
                 .securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
-                .addFilterBefore(jwtAuthenticationWebFilter(), SecurityWebFiltersOrder.AUTHENTICATION); // Используем SecurityWebFiltersOrder.AUTHENTICATION
+                .addFilterAt(corsWebFilter(), SecurityWebFiltersOrder.CORS)
+                .addFilterBefore(jwtAuthenticationWebFilter(), SecurityWebFiltersOrder.AUTHENTICATION);
 
         return http.build();
     }
@@ -55,5 +59,18 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public CorsWebFilter corsWebFilter() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.addAllowedOrigin("http://localhost:8081");
+        corsConfiguration.addAllowedMethod("*");
+        corsConfiguration.addAllowedHeader("*");
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfiguration);
+
+        return new CorsWebFilter(source);
     }
 }

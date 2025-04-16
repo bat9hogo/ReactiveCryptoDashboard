@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Крипто цены</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .price-table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            font-family: sans-serif;
+        }
+
+        .price-table th, .price-table td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        .price-table th {
+            background-color: #f5f5f5;
+        }
+
+        .logout-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background-color: #c9302c;
+        }
+    </style>
+</head>
+<body>
+<h1 style="text-align:center;">Цены в реальном времени</h1>
+
+<table class="price-table">
+    <thead>
+    <tr>
+        <th>Валюта</th>
+        <th>Цена</th>
+        <th>Время</th>
+    </tr>
+    </thead>
+    <tbody id="priceTableBody">
+    <!-- Данные будут сюда подставляться -->
+    </tbody>
+</table>
+
+<button class="logout-btn" id="logoutBtn">Выйти</button>
+
+<script src="prices.js"></script>
+</body>
+</html>
