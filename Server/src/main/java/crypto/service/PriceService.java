@@ -12,6 +12,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -38,7 +39,6 @@ public class PriceService {
                 .flatMap(tick -> Flux.fromArray(symbols))
                 .flatMap(this::fetchPrice)
                 .flatMap(this::saveAndUpdate)
-                .doOnNext(data -> System.out.println("Price updated: " + data))
                 .subscribe(
                         data -> log.info("Price updated: {}", data),
                         error -> log.error("Error fetching price", error)
@@ -85,7 +85,8 @@ public class PriceService {
     }
 
     public Flux<PriceData> streamPrices() {
-        return Flux.fromIterable(latestPrices.values());
+        return Flux.interval(Duration.ofSeconds(3))
+                .flatMap(tick -> Flux.fromIterable(latestPrices.values()));
     }
 
     public Mono<PriceData> getLatestPrice(String symbol) {

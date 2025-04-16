@@ -26,12 +26,8 @@ public class PriceWebSocketHandler implements WebSocketHandler {
     @Override
     public Mono<Void> handle(WebSocketSession session) {
         Flux<WebSocketMessage> messageFlux = priceService.streamPrices()
-                .doOnSubscribe(subscription -> System.out.println("WebSocket connection established"))
-                .doOnNext(price -> System.out.println("Sending price: " + price))
                 .map(this::toJson)
-                .map(session::textMessage)
-                .doOnError(error -> System.out.println("WebSocket error: " + error.getMessage()))
-                .doOnComplete(() -> System.out.println("WebSocket connection closed"));
+                .map(session::textMessage);
 
         return session.send(messageFlux);
     }
