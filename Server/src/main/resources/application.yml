@@ -20,3 +20,9 @@ app:
     - ETHUSDT
   base-url: https://api.binance.com
   update-interval: 3
+
+alerts:
+  default-threshold: 5.0
+  thresholds:
+    BTCUSDT: 0.01
+    ETHUSDT: 0.01

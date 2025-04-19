@@ -35,15 +35,29 @@ document.addEventListener("DOMContentLoaded", () => {
     // WebSocket
     const socket = new WebSocket("ws://localhost:8080/ws/prices");
     socket.onmessage = e => {
-        const {symbol, price} = JSON.parse(e.data);
+        const data = JSON.parse(e.data);
+
+        // Если это алерт — сразу показать всплывающее окно
+        if (data.type === 'alert') {
+            const {symbol, change} = data;
+            showAlertPopup(symbol, change);
+            return;
+        }
+
+        // Иначе — обычное обновление цены
+        const {symbol, price} = data;
         if (!selectedTokens.has(symbol)) return;
+
         const time = new Date().toLocaleTimeString();
-        priceDataMap[symbol] = priceDataMap[symbol]||[];
-        // предотвращаем дубли одинакового времени
+        priceDataMap[symbol] = priceDataMap[symbol] || [];
+
         if (!priceDataMap[symbol].length || priceDataMap[symbol][0].time !== time) {
             priceDataMap[symbol].unshift({time, price});
-            if (priceDataMap[symbol].length>300) priceDataMap[symbol].pop();
+            if (priceDataMap[symbol].length > 300) {
+                priceDataMap[symbol].pop();
+            }
         }
+
         renderTables();
         renderCharts();
     };
@@ -224,6 +238,16 @@ document.addEventListener("DOMContentLoaded", () => {
             if (endTime   && !t.isSameOrBefore (moment(endTime,   'HH:mm'))) ok = false;
             return ok;
         });
+    }
+
+    function showAlertPopup(symbol, changePct) {
+        const text = `${symbol}: ${changePct > 0 ? '↗' : '↘'} ${changePct.toFixed(2)}%`;
+        const popup = document.createElement('div');
+        popup.className = 'alert-popup';
+        popup.textContent = text;
+        document.body.appendChild(popup);
+        // удалить после анимации
+        setTimeout(() => document.body.removeChild(popup), 4000);
     }
 
     // initial
