@@ -1,4 +1,4 @@
-/* Общий стиль страницы */
+/* price.css */
 body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -12,88 +12,74 @@ body {
     align-items: center;
     padding: 10px 20px;
     background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     position: sticky;
     top: 0;
     z-index: 10;
 }
 
-/* Кнопка выхода */
+/* Выход */
 .logout-btn {
     background-color: #d9534f;
-    color: white;
+    color: #fff;
     border: none;
     padding: 8px 14px;
     border-radius: 5px;
     cursor: pointer;
 }
-
 .logout-btn:hover {
     background-color: #c9302c;
 }
 
-/* Выбор токенов */
+/* Dropdown токенов */
 .token-selector {
     position: relative;
 }
-
-/* Кнопка dropdown */
 .dropdown-btn {
     background-color: #007bff;
-    color: white;
+    color: #fff;
     padding: 8px 14px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
-
 .dropdown-btn:hover {
     background-color: #0056b3;
 }
-
-/* Содержимое dropdown */
 .dropdown-content {
     display: none;
     position: absolute;
     top: 36px;
     left: 0;
-    background-color: #fff;
+    background: #fff;
     border: 1px solid #ccc;
-    min-width: 180px;
-    padding: 10px;
     border-radius: 5px;
+    padding: 8px;
     z-index: 5;
+    flex-direction: column;       /* столбец */
 }
-
 .dropdown-content label {
     display: block;
-    margin-bottom: 5px;
+    margin: 4px 0;
     font-size: 14px;
 }
-
-/* Показывать dropdown при наведении */
 .token-selector:hover .dropdown-content {
-    display: block;
+    display: flex;
 }
 
-/* Контейнер для графиков */
+/* Графики */
 .charts-container {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
     margin: 20px 0;
-    position: relative;
 }
-
-/* Обёртка под каждый график — половина ширины */
-.charts-container .single-chart {
+.single-chart {
     flex: 1 1 calc(50% - 20px);
-    height: 300px; /* Больше высоты для удобства */
+    height: 300px;
     position: relative;
 }
-
-/* Общие стили для canvas внутри графиков */
 .single-chart canvas {
     width: 100% !important;
     height: 100% !important;
@@ -101,149 +87,137 @@ body {
     border: 1px solid #ddd;
 }
 
-/* Стиль для контейнера, который будет поддерживать скроллинг и зум */
-.chart-wrapper {
-    overflow-x: auto;
-    width: 100%;
-    position: relative;
-    max-width: 100%;
-}
-
-.chart {
-    cursor: pointer;
-}
-
-/* Контейнер таблиц */
+/* Таблицы + кнопка фильтра */
 .tables-container {
     display: flex;
     flex-wrap: wrap;
     gap: 40px;
     justify-content: center;
     margin-bottom: 40px;
+    max-height: 500px;
+    overflow-y: auto;
 }
-
-/* Таблицы цен */
+.table-wrapper {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+}
 .price-table {
     border-collapse: collapse;
     width: 400px;
     max-width: 90vw;
     font-size: 14px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     border-radius: 8px;
     overflow: hidden;
 }
-
 .price-table th,
 .price-table td {
     padding: 10px;
     text-align: left;
     border: 1px solid #e0e0e0;
 }
-
 .price-table th {
-    background-color: #f0f4f8;
+    background: #f0f4f8;
 }
 
-/* Стиль для кнопки загрузки дополнительных данных */
-.load-more-btn {
-    margin-top: 10px;
-    padding: 10px;
-    cursor: pointer;
+/* Фильтр-кнопка */
+.filter-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 6px 12px;
     background-color: #007bff;
-    color: white;
+    color: #fff;
     border: none;
     border-radius: 5px;
+    cursor: pointer;
+    z-index: 5;
 }
-
-.load-more-btn:hover {
+.filter-btn:hover {
     background-color: #0056b3;
 }
 
-/* Стиль для скроллинга таблиц */
-.tables-container {
-    max-height: 500px;
-    overflow-y: auto; /* Добавляем вертикальный скроллинг */
-}
-
-/* Кнопка фильтрации рядом с таблицей */
-.filter-btn {
-    margin: 10px 0 0 0;
-    padding: 8px 14px;
+/* Кнопка объединить */
+.combine-btn {
     background-color: #007bff;
-    color: white;
+    color: #fff;
     border: none;
+    padding: 8px 14px;
     border-radius: 5px;
     cursor: pointer;
-    display: inline-block;
+    margin-left: 10px;
 }
-
-.filter-btn:hover {
+.combine-btn:hover {
     background-color: #0056b3;
 }
 
 /* Модальное окно */
 .filter-modal {
-    display: none; /* По умолчанию скрыто */
+    display: none;
     position: fixed;
     z-index: 20;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.4);
 }
-
-/* Содержимое фильтра */
 .filter-content {
-    background-color: #fff;
+    background: #fff;
     margin: 10% auto;
     padding: 20px;
     border-radius: 8px;
-    width: 300px;
+    width: 320px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    position: relative;
 }
-
-/* Закрывающая кнопка */
+.filter-content h3 {
+    margin-top: 0;
+}
+/* Крестик красным */
 .close-btn {
     position: absolute;
-    right: 15px;
-    top: 10px;
+    top: 10px; right: 15px;
     font-size: 24px;
+    color: red;
     cursor: pointer;
 }
-
-/* Кнопка применить фильтр */
-.apply-filter {
-    background-color: #007bff;
-    color: white;
+/* Разметка полей по строкам */
+.filter-content label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.filter-content label span {
+    flex: 1;
+}
+.filter-content input {
+    flex: 1;
+    margin-left: 8px;
+}
+/* Кнопки модалки */
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+.apply-filter,
+.reset-filter {
     padding: 8px 14px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 15px;
-    width: 100%;
 }
-
-.apply-filter:hover {
-    background-color: #0056b3;
-}
-
-/* Объединить графики в один */
-.combine-charts-btn {
-    margin: 20px auto;
-    display: block;
-    padding: 10px 16px;
+.apply-filter {
     background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
+    color: #fff;
+    flex: 1;
+    margin-left: 8px;
 }
-
-.combine-charts-btn:hover {
-    background-color: #0056b3;
+.apply-filter:hover { background-color: #0056b3; }
+.reset-filter {
+    background-color: #6c757d;
+    color: #fff;
+    flex: 1;
 }
+.reset-filter:hover { background-color: #5a6268; }
