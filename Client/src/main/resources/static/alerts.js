@@ -9,6 +9,9 @@ if (!alertsContainer) {
     document.body.appendChild(alertsContainer);
 }
 
+// === Звук алерта ===
+const alertSound = new Audio("/alert-sound.mp3");
+
 // Создание кнопки для открытия истории
 function createAlertHistoryButton() {
     const historyButton = document.createElement('button');
@@ -59,6 +62,10 @@ function showAlertPopup(symbol, change, price) {
         alertBox.style.transform = 'translateY(0)';
     });
 
+    // Звук
+    alertSound.currentTime = 0;
+    alertSound.play().catch(e => console.warn("Не удалось воспроизвести звук:", e));
+
     // Добавление в историю
     alertHistory.push({
         symbol,
@@ -83,14 +90,13 @@ function showAlertHistory() {
     historyContainer.style.display = historyContainer.style.display === 'block' ? 'none' : 'block';
 }
 
-// Обработчик кнопки истории
+// Обработчик кнопки истории (можно удалить, если не используется)
 document.getElementById('alertHistoryBtn')?.addEventListener('click', function() {
     const historyContainer = document.getElementById('alertHistoryContainer');
     if (historyContainer) {
         historyContainer.style.display = historyContainer.style.display === 'block' ? 'none' : 'block';
     }
 });
-
 
 // Обновить список истории
 function updateAlertHistory() {
