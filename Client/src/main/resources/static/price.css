@@ -27,9 +27,7 @@ body {
     border-radius: 5px;
     cursor: pointer;
 }
-.logout-btn:hover {
-    background-color: #c9302c;
-}
+.logout-btn:hover { background-color: #c9302c; }
 
 /* Dropdown токенов */
 .token-selector {
@@ -43,9 +41,8 @@ body {
     border-radius: 5px;
     cursor: pointer;
 }
-.dropdown-btn:hover {
-    background-color: #0056b3;
-}
+.dropdown-btn:hover { background-color: #0056b3; }
+/* расширили и запретили перенос */
 .dropdown-content {
     display: none;
     position: absolute;
@@ -56,12 +53,14 @@ body {
     border-radius: 5px;
     padding: 8px;
     z-index: 5;
-    flex-direction: column;       /* столбец */
+    flex-direction: column;
+    min-width: 220px;
 }
 .dropdown-content label {
     display: block;
     margin: 4px 0;
     font-size: 14px;
+    white-space: nowrap;
 }
 .token-selector:hover .dropdown-content {
     display: flex;
@@ -97,9 +96,11 @@ body {
     max-height: 500px;
     overflow-y: auto;
 }
+/* flex‑обёртка: кнопка и таблица рядом, без overlap */
 .table-wrapper {
-    position: relative;
-    display: inline-block;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
     vertical-align: top;
 }
 .price-table {
@@ -122,22 +123,18 @@ body {
     background: #f0f4f8;
 }
 
-/* Фильтр-кнопка */
+/* Фильтр‑кнопка уже без absolute */
 .filter-btn {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    padding: 6px 12px;
+    padding: 10px 12px;
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    z-index: 5;
+    flex-shrink: 0;
+
 }
-.filter-btn:hover {
-    background-color: #0056b3;
-}
+.filter-btn:hover { background-color: #0056b3; }
 
 /* Кнопка объединить */
 .combine-btn {
@@ -149,9 +146,7 @@ body {
     cursor: pointer;
     margin-left: 10px;
 }
-.combine-btn:hover {
-    background-color: #0056b3;
-}
+.combine-btn:hover { background-color: #0056b3; }
 
 /* Модальное окно */
 .filter-modal {
@@ -169,11 +164,10 @@ body {
     border-radius: 8px;
     width: 320px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
 }
-.filter-content h3 {
-    margin-top: 0;
-}
-/* Крестик красным */
+.filter-content h3 { margin-top: 0; }
+/* Красный крестик */
 .close-btn {
     position: absolute;
     top: 10px; right: 15px;
@@ -181,20 +175,15 @@ body {
     color: red;
     cursor: pointer;
 }
-/* Разметка полей по строкам */
+/* Метки и поля по строкам */
 .filter-content label {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
 }
-.filter-content label span {
-    flex: 1;
-}
-.filter-content input {
-    flex: 1;
-    margin-left: 8px;
-}
+.filter-content label span { flex: 1; }
+.filter-content input { flex: 1; margin-left: 8px; }
 /* Кнопки модалки */
 .modal-buttons {
     display: flex;
@@ -207,17 +196,17 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    flex: 1;
 }
 .apply-filter {
     background-color: #007bff;
     color: #fff;
-    flex: 1;
     margin-left: 8px;
 }
 .apply-filter:hover { background-color: #0056b3; }
 .reset-filter {
     background-color: #6c757d;
     color: #fff;
-    flex: 1;
+    margin-right: 8px;
 }
 .reset-filter:hover { background-color: #5a6268; }
