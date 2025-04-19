@@ -60,7 +60,8 @@ public class PriceWebSocketHandler implements WebSocketHandler {
             BigDecimal threshold = BigDecimal.valueOf(alertProperties.thresholdFor(symbol));
 
             if (changePct.abs().compareTo(threshold) >= 0) {
-                return Flux.just(toAlertJson(symbol, changePct.doubleValue()));
+                return Flux.just(toAlertJson(symbol, changePct.doubleValue(), newPrice.doubleValue()));
+
             }
         }
         return Flux.empty();
@@ -71,10 +72,12 @@ public class PriceWebSocketHandler implements WebSocketHandler {
                 "\",\"price\":" + priceData.getPrice() + "}";
     }
 
-    private String toAlertJson(String symbol, double changePct) {
+    private String toAlertJson(String symbol, double changePct, double price) {
         return "{\"type\":\"alert\"" +
                 ",\"symbol\":\"" + symbol + "\"" +
                 ",\"change\":" + String.format("%.2f", changePct) +
+                ",\"price\":" + String.format("%.2f", price) +
                 "}";
     }
+
 }

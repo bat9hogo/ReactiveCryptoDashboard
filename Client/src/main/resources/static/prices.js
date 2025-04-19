@@ -39,8 +39,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Если это алерт — сразу показать всплывающее окно
         if (data.type === 'alert') {
-            const {symbol, change} = data;
-            showAlertPopup(symbol, change);
+            const {symbol, change, price} = data;
+            showAlertPopup(symbol, change,price);
             return;
         }
 
@@ -61,6 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
         renderTables();
         renderCharts();
     };
+
 
     // кнопка «Объединить»
     const combineBtn = document.createElement("button");
@@ -240,15 +241,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    function showAlertPopup(symbol, changePct) {
-        const text = `${symbol}: ${changePct > 0 ? '↗' : '↘'} ${changePct.toFixed(2)}%`;
-        const popup = document.createElement('div');
-        popup.className = 'alert-popup';
-        popup.textContent = text;
-        document.body.appendChild(popup);
-        // удалить после анимации
-        setTimeout(() => document.body.removeChild(popup), 4000);
-    }
+
 
     // initial
     renderTables();

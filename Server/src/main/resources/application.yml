@@ -22,7 +22,7 @@ app:
   update-interval: 3
 
 alerts:
-  default-threshold: 5.0
+  default-threshold: 0.0001
   thresholds:
-    BTCUSDT: 0.01
-    ETHUSDT: 0.01
+    BTCUSDT: 0.0001
+    ETHUSDT: 0.0001
