@@ -12,7 +12,7 @@ body {
     align-items: center;
     padding: 10px 20px;
     background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
     z-index: 10;
@@ -83,26 +83,34 @@ body {
     gap: 20px;
     justify-content: center;
     margin: 20px 0;
+    position: relative;
 }
 
 /* Обёртка под каждый график — половина ширины */
 .charts-container .single-chart {
     flex: 1 1 calc(50% - 20px);
-    height: 250px;
-}
-
-/* Обёртка под объединённый график — вся ширина */
-.charts-container .combined-chart {
-    flex: 1 1 100%;
-    height: 300px;
+    height: 300px; /* Больше высоты для удобства */
+    position: relative;
 }
 
 /* Общие стили для canvas внутри графиков */
-.single-chart canvas,
-.combined-chart canvas {
+.single-chart canvas {
     width: 100% !important;
     height: 100% !important;
     display: block;
+    border: 1px solid #ddd;
+}
+
+/* Стиль для контейнера, который будет поддерживать скроллинг и зум */
+.chart-wrapper {
+    overflow-x: auto;
+    width: 100%;
+    position: relative;
+    max-width: 100%;
+}
+
+.chart {
+    cursor: pointer;
 }
 
 /* Контейнер таблиц */
@@ -121,7 +129,7 @@ body {
     max-width: 90vw;
     font-size: 14px;
     background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow: hidden;
 }
@@ -135,4 +143,25 @@ body {
 
 .price-table th {
     background-color: #f0f4f8;
+}
+
+/* Стиль для кнопки загрузки дополнительных данных */
+.load-more-btn {
+    margin-top: 10px;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.load-more-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Стиль для скроллинга таблиц */
+.tables-container {
+    max-height: 500px;
+    overflow-y: auto; /* Добавляем вертикальный скроллинг */
 }

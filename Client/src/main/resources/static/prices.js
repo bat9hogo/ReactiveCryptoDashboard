@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const time = new Date().toLocaleTimeString();
             priceDataMap[symbol] = priceDataMap[symbol] || [];
             priceDataMap[symbol].unshift({ time, price });
-            if (priceDataMap[symbol].length > 20) priceDataMap[symbol].pop();
+            if (priceDataMap[symbol].length > 300) priceDataMap[symbol].pop();
             renderTables();
             renderCharts();
         } catch (e) {
@@ -151,7 +151,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     scales: {
                         x: { type: "category", title: { display: true, text: "Время" } },
                         y: { title: { display: true, text: "Цена" } }
-                    }
+                    },
+                    zoom: { enabled: true, mode: 'xy' }
                 }
             });
             chart2.canvas.parentNode.style.display = "none";
@@ -176,7 +177,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         scales: {
                             x: { type: "category", title: { display: true, text: "Время" } },
                             y: { title: { display: true, text: "Цена" } }
-                        }
+                        },
+                        zoom: { enabled: true, mode: 'xy' }
                     }
                 });
                 if (idx === 0) chartInstance1 = chart;
