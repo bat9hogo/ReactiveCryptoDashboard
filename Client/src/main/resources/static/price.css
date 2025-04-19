@@ -210,3 +210,65 @@ body {
     margin-right: 8px;
 }
 .reset-filter:hover { background-color: #5a6268; }
+
+.alert-history-button {
+    position: fixed;
+    top: 10px;
+    right: 150px;  /* Сдвигаем кнопку на 150px от правого края, чтобы не пересекалась с кнопкой выхода */
+    background-color: #007bff; /* Синий цвет для кнопки */
+    color: #fff;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+}
+
+.alert-history-button:hover {
+    background-color: #0056b3; /* Тёмно-синий при наведении */
+}
+
+/* Контейнер истории алертов */
+.alert-history-container {
+    display: none;
+    position: fixed;
+    top: 60px;
+    right: 20px;
+    width: 320px;
+    max-height: 400px;
+    background-color: white; /* Белый фон для контейнера */
+    color: #333; /* Тёмный текст для контента */
+    padding: 15px;
+    border-radius: 10px;
+    overflow-y: auto;
+    z-index: 10001;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* Внутренние элементы истории алертов */
+.alert-history-entry {
+    margin-bottom: 12px;
+    font-size: 14px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 8px;
+}
+
+.alert-history-entry .time {
+    color: #999;
+    font-size: 12px;
+}
+
+/* Значения изменения процента в истории (зелёный/красный) */
+.alert-history-entry .percent-change {
+    font-weight: bold;
+    display: inline-block;
+}
+
+.alert-history-entry .percent-change.up {
+    color: #2e7d32;  /* Зеленый для роста */
+}
+
+.alert-history-entry .percent-change.down {
+    color: #c62828;  /* Красный для падения */
+}

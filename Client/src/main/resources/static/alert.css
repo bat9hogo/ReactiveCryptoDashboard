@@ -39,47 +39,6 @@
     font-size: 18px;
 }
 
-.alert-history-container {
-    display: none;
-    position: fixed;
-    top: 60px;
-    right: 20px;
-    width: 320px;
-    max-height: 400px;
-    background-color: #1e1e1e;
-    color: #f0f0f0;
-    padding: 15px;
-    border-radius: 10px;
-    overflow-y: auto;
-    z-index: 10001;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-}
 
-.alert-history-entry {
-    margin-bottom: 12px;
-    font-size: 14px;
-    border-bottom: 1px solid #444;
-    padding-bottom: 8px;
-}
 
-.alert-history-entry .time {
-    color: #999;
-    font-size: 12px;
-}
 
-.alert-history-button {
-    position: fixed;
-    top: 10px;
-    right: 80px;
-    background-color: #444;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.alert-history-button:hover {
-    background-color: #666;
-}

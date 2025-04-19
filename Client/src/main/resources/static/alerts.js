@@ -9,6 +9,29 @@ if (!alertsContainer) {
     document.body.appendChild(alertsContainer);
 }
 
+// Создание кнопки для открытия истории
+function createAlertHistoryButton() {
+    const historyButton = document.createElement('button');
+    historyButton.className = 'alert-history-button';
+    historyButton.innerHTML = 'История алертов';
+    document.body.appendChild(historyButton);
+    historyButton.addEventListener('click', showAlertHistory);
+}
+
+// Создание контейнера для истории алертов, если его нет
+function createAlertHistoryContainer() {
+    let historyContainer = document.querySelector('.alert-history-container');
+    if (!historyContainer) {
+        historyContainer = document.createElement('div');
+        historyContainer.className = 'alert-history-container';
+        document.body.appendChild(historyContainer);
+    }
+}
+
+// Вызов функции для создания кнопки и контейнера истории
+createAlertHistoryButton();
+createAlertHistoryContainer();
+
 // Показ всплывающего алерта
 function showAlertPopup(symbol, change, price) {
     if (change === undefined || price === undefined) {
@@ -60,6 +83,15 @@ function showAlertHistory() {
     historyContainer.style.display = historyContainer.style.display === 'block' ? 'none' : 'block';
 }
 
+// Обработчик кнопки истории
+document.getElementById('alertHistoryBtn')?.addEventListener('click', function() {
+    const historyContainer = document.getElementById('alertHistoryContainer');
+    if (historyContainer) {
+        historyContainer.style.display = historyContainer.style.display === 'block' ? 'none' : 'block';
+    }
+});
+
+
 // Обновить список истории
 function updateAlertHistory() {
     const historyContainer = document.querySelector('.alert-history-container');
@@ -78,6 +110,3 @@ function updateAlertHistory() {
         historyContainer.appendChild(entry);
     });
 }
-
-// Навешиваем обработчик на кнопку истории
-document.querySelector('.alert-history-button')?.addEventListener('click', showAlertHistory);
