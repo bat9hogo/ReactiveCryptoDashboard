@@ -2,8 +2,6 @@
 // Перед этим скриптом в HTML подключите:
 // <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-// Обратите внимание: в HTML нужно задать id="charts" и id="tablesContainer"
-
 document.addEventListener("DOMContentLoaded", () => {
     // Проверяем JWT-токен
     const jwtToken = localStorage.getItem("jwtToken");
@@ -36,9 +34,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Состояние приложения
-    const selectedTokens = new Set();       // содержит символы вида "BTCUSDT"
-    const priceDataMap = {};                // symbol -> [{ time, price }, ...]
-    let chartsMap = {};                     // symbol -> Chart instance
+    const selectedTokens = new Set();         // e.g. "BTCUSDT"
+    const priceDataMap = {};                  // symbol -> [{ time, price }, ...]
+    let chartsMap = {};                       // symbol -> Chart instance
     let combinedChart = null;
     let isCombined = false;
 
@@ -64,7 +62,8 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const data = JSON.parse(event.data);
             const { symbol, price } = data;
-            if (!selectedTokens.has(symbol)) return; // игнорируем неподписанные
+            // Игнорируем неподписанные символы
+            if (!selectedTokens.has(symbol)) return;
 
             // Добавляем новую запись
             const entry = { time: new Date().toLocaleTimeString(), price };
@@ -82,8 +81,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Обработчик чекбоксов токенов
     tokenDropdown.querySelectorAll("input[type='checkbox']").forEach(checkbox => {
         checkbox.addEventListener("change", () => {
-            const base = checkbox.value;           // "BTC" или "ETH"
-            const symbol = base + "USDT";         // формат сервера
+            const base = checkbox.value;              // "BTC" или "ETH"
+            const symbol = base + "USDT";           // формат сервера
             if (checkbox.checked) {
                 selectedTokens.add(symbol);
                 priceDataMap[symbol] = priceDataMap[symbol] || [];
@@ -92,10 +91,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 selectedTokens.delete(symbol);
                 delete priceDataMap[symbol];
                 if (chartsMap[symbol]) {
-                    chartsMap[symbol].destroy(); delete chartsMap[symbol];
+                    chartsMap[symbol].destroy();
+                    delete chartsMap[symbol];
                 }
             }
-            // Показ/скрытие кнопки объединения
+            // Показываем/убираем кнопку объединения
             if (selectedTokens.size === 2) {
                 combineBtn.style.display = "inline-block";
             } else {
@@ -107,37 +107,53 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Очистка
-    function clearTables() { tablesContainer.innerHTML = ""; }
+    // Очистка таблиц и графиков
+    function clearTables() {
+        tablesContainer.innerHTML = "";
+    }
     function clearCharts() {
         chartsContainer.innerHTML = "";
-        Object.values(chartsMap).forEach(c => c.destroy()); chartsMap = {};
+        Object.values(chartsMap).forEach(chart => chart.destroy());
+        chartsMap = {};
         if (combinedChart) { combinedChart.destroy(); combinedChart = null; }
     }
 
     // Отрисовка таблиц
     function renderTables() {
         clearTables();
-        if (selectedTokens.size === 0) return;
-        selectedTokens.forEach(symbol => {
+        for (const symbol of selectedTokens) {
             const rows = priceDataMap[symbol] || [];
-            const table = document.createElement("table"); table.className = "price-table";
+            const table = document.createElement("table");
+            table.className = "price-table";
             const thead = document.createElement("thead");
-            thead.innerHTML = `<tr><th>${symbol}</th><th>Цена</th><th>Время</th></tr>`;
+            thead.innerHTML = `
+                <tr>
+                    <th>${symbol}</th>
+                    <th>Цена</th>
+                    <th>Время</th>
+                </tr>
+            `;
+            table.appendChild(thead);
+
             const tbody = document.createElement("tbody");
             if (rows.length === 0) {
-                const tr = document.createElement("tr"); tr.innerHTML = `<td colspan=3 style='text-align:center;'>Нет данных</td>`;
+                const tr = document.createElement("tr");
+                tr.innerHTML = `<td colspan="3" style="text-align:center;">Нет данных</td>`;
                 tbody.appendChild(tr);
             } else {
                 rows.forEach(entry => {
                     const tr = document.createElement("tr");
-                    tr.innerHTML = `<td>${symbol}</td><td>${entry.price}</td><td>${entry.time}</td>`;
+                    tr.innerHTML = `
+                        <td>${symbol}</td>
+                        <td>${entry.price}</td>
+                        <td>${entry.time}</td>
+                    `;
                     tbody.appendChild(tr);
                 });
             }
-            table.append(thead, tbody);
+            table.appendChild(tbody);
             tablesContainer.appendChild(table);
-        });
+        }
     }
 
     // Отрисовка графиков
@@ -147,14 +163,38 @@ document.addEventListener("DOMContentLoaded", () => {
         if (tokens.length === 0) return;
 
         if (isCombined && tokens.length === 2) {
-            const canvas = document.createElement("canvas"); chartsContainer.appendChild(canvas);
-            const datasets = tokens.map(sym => ({ label: sym, data: priceDataMap[sym].slice().reverse().map(r => ({ x: r.time, y: r.price })), fill: false }));
-            combinedChart = new Chart(canvas.getContext("2d"), { type: 'line', data: { datasets }, options: { scales: { x: { type: 'category', title: { display: true, text: 'Время' } }, y: { title: { display: true, text: 'Цена' } } } } });
+            const canvas = document.createElement("canvas");
+            chartsContainer.appendChild(canvas);
+            const datasets = tokens.map(sym => ({
+                label: sym,
+                data: priceDataMap[sym].slice().reverse().map(r => ({ x: r.time, y: r.price })),
+                fill: false
+            }));
+            combinedChart = new Chart(canvas.getContext("2d"), {
+                type: 'line',
+                data: { datasets },
+                options: {
+                    scales: {
+                        x: { type: 'category', title: { display: true, text: 'Время' } },
+                        y: { title: { display: true, text: 'Цена' } }
+                    }
+                }
+            });
         } else {
             tokens.forEach(sym => {
-                const canvas = document.createElement("canvas"); chartsContainer.appendChild(canvas);
+                const canvas = document.createElement("canvas");
+                chartsContainer.appendChild(canvas);
                 const data = priceDataMap[sym].slice().reverse().map(r => ({ x: r.time, y: r.price }));
-                chartsMap[sym] = new Chart(canvas.getContext("2d"), { type: 'line', data: { datasets: [{ label: sym, data, fill: false }] }, options: { scales: { x: { type: 'category', title: { display: true, text: 'Время' } }, y: { title: { display: true, text: 'Цена' } } } } });
+                chartsMap[sym] = new Chart(canvas.getContext("2d"), {
+                    type: 'line',
+                    data: { datasets: [{ label: sym, data, fill: false }] },
+                    options: {
+                        scales: {
+                            x: { type: 'category', title: { display: true, text: 'Время' } },
+                            y: { title: { display: true, text: 'Цена' } }
+                        }
+                    }
+                });
             });
         }
     }
