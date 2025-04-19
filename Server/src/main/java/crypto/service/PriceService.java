@@ -89,6 +89,12 @@ public class PriceService {
                 .flatMap(tick -> Flux.fromIterable(latestPrices.values()));
     }
 
+    public Flux<PriceData> streamPricesBySymbol(String symbol) {
+        return Flux.interval(Duration.ofSeconds(3))
+                .flatMap(tick -> Mono.justOrEmpty(latestPrices.get(symbol)))
+                .filter(data -> data != null); // обязательно фильтр для null
+    }
+
     public Mono<PriceData> getLatestPrice(String symbol) {
         return Mono.justOrEmpty(latestPrices.get(symbol));
     }

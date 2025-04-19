@@ -30,13 +30,6 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-//    @PostMapping("/register")
-//    public Mono<String> register(@RequestBody RegisterRequest registerRequest) {
-//        return Mono.fromRunnable(() -> {
-//            userService.registerUser(registerRequest.getUsername(), registerRequest.getPassword());
-//        }).thenReturn("User registered successfully!");
-//    }
-
     @PostMapping("/register")
     public Mono<ResponseEntity<String>> register(@RequestBody RegisterRequest registerRequest) {
         return Mono.fromRunnable(() -> {

@@ -15,22 +15,22 @@ import reactor.core.publisher.Mono;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class PriceWebSocketHandler implements WebSocketHandler {
 
     private final PriceService priceService;
 
-    public PriceWebSocketHandler(PriceService priceService) {
-        this.priceService = priceService;
-    }
-
     @Override
     public Mono<Void> handle(WebSocketSession session) {
-        Flux<WebSocketMessage> messageFlux = priceService.streamPrices()
-                .map(this::toJson)
-                .map(session::textMessage);
-
-        return session.send(messageFlux);
+        return session.receive()
+                .map(WebSocketMessage::getPayloadAsText) // Flux<String>
+                .flatMap(symbol -> priceService.streamPricesBySymbol(symbol) // Flux<PriceData>
+                        .map(this::toJson)
+                        .map(session::textMessage)
+                )
+                .as(session::send); // Отправка данных клиенту
     }
+
 
     private String toJson(PriceData priceData) {
         return "{\"symbol\": \"" + priceData.getSymbol() + "\", \"price\": " + priceData.getPrice() + "}";

@@ -1,113 +1,29 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Крипто цены</title>
-    <link rel="stylesheet" href="pricestyle.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Подключаем Chart.js -->
-    <style>
-        /* Стили для страницы */
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f4f4f4;
-        }
-
-        header {
-            padding: 20px;
-            background-color: #007bff;
-            color: white;
-            text-align: center;
-        }
-
-        .charts-container {
-            display: flex;
-            justify-content: space-between;
-            padding: 20px;
-        }
-
-        .chart-wrapper {
-            width: 48%;
-            height: 300px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .price-table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            font-family: sans-serif;
-        }
-
-        .price-table th, .price-table td {
-            padding: 10px;
-            border: 1px solid #ccc;
-            text-align: left;
-        }
-
-        .price-table th {
-            background-color: #f5f5f5;
-        }
-
-        .logout-btn {
-            display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
-            background-color: #d9534f;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .logout-btn:hover {
-            background-color: #c9302c;
-        }
-
-        /* Дополнительные стили для отзывчивости */
-        @media (max-width: 768px) {
-            .charts-container {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .chart-wrapper {
-                width: 90%;
-                margin-bottom: 20px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="price.css">
 </head>
 <body>
-<header>
-    <h1>Крипто цены в реальном времени</h1>
-</header>
-
-<div class="charts-container">
-    <div class="chart-wrapper">
-        <canvas id="cryptoPriceChart"></canvas>
+<div class="top-bar">
+    <div class="token-selector">
+        <button class="dropdown-btn">Выбор токенов ▾</button>
+        <div class="dropdown-content" id="tokenDropdown">
+            <label><input type="checkbox" value="BTC"> Bitcoin (BTC)</label>
+            <label><input type="checkbox" value="ETH"> Ethereum (ETH)</label>
+        </div>
     </div>
-    <div class="chart-wrapper">
-        <canvas id="volumeChart"></canvas>
-    </div>
+    <button class="logout-btn" id="logoutBtn">Выйти</button>
 </div>
 
-<table class="price-table">
-    <thead>
-    <tr>
-        <th>Валюта</th>
-        <th>Цена</th>
-        <th>Время</th>
-    </tr>
-    </thead>
-    <tbody id="priceTableBody"></tbody>
-</table>
+<div id="charts" class="charts-container">
+    <!-- графики будут рендериться сюда -->
+</div>
 
-<button class="logout-btn" id="logoutBtn">Выйти</button>
+<div id="tablesContainer" class="tables-container">
+    <!-- таблицы будут рендериться сюда -->
+</div>
 
 <script src="prices.js"></script>
 </body>
