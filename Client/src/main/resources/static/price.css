@@ -165,3 +165,85 @@ body {
     max-height: 500px;
     overflow-y: auto; /* Добавляем вертикальный скроллинг */
 }
+
+/* Кнопка фильтрации рядом с таблицей */
+.filter-btn {
+    margin: 10px 0 0 0;
+    padding: 8px 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.filter-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Модальное окно */
+.filter-modal {
+    display: none; /* По умолчанию скрыто */
+    position: fixed;
+    z-index: 20;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Содержимое фильтра */
+.filter-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+}
+
+/* Закрывающая кнопка */
+.close-btn {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Кнопка применить фильтр */
+.apply-filter {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.apply-filter:hover {
+    background-color: #0056b3;
+}
+
+/* Объединить графики в один */
+.combine-charts-btn {
+    margin: 20px auto;
+    display: block;
+    padding: 10px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.combine-charts-btn:hover {
+    background-color: #0056b3;
+}

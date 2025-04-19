@@ -17,22 +17,42 @@
     <button class="logout-btn" id="logoutBtn">Выйти</button>
 </div>
 
+<!-- Контейнер для фильтров -->
+<div id="filtersContainer" class="filters-container" style="margin-top: 20px;"></div>
+
 <div class="charts-container">
-<div class="single-chart">
-    <canvas id="chart1"></canvas>
-</div>
-<div class="single-chart">
-    <canvas id="chart2"></canvas>
-</div>
+    <div class="single-chart">
+        <canvas id="chart1"></canvas>
+    </div>
+    <div class="single-chart">
+        <canvas id="chart2"></canvas>
+    </div>
 </div>
 
 <div id="tablesContainer" class="tables-container">
     <!-- Таблицы будут рендериться сюда -->
 </div>
 
+<!-- Модальное окно фильтрации -->
+<div id="filterModal" class="filter-modal">
+    <div class="filter-content">
+        <span class="close-btn" id="closeFilter">&times;</span>
+        <h3>Фильтрация данных</h3>
+        <label for="minTime">Мин. время (чч:мм):</label>
+        <input type="time" id="minTime">
+        <label for="maxTime">Макс. время (чч:мм):</label>
+        <input type="time" id="maxTime">
+        <label for="minPrice">Мин. цена:</label>
+        <input type="number" id="minPrice" step="0.01">
+        <label for="maxPrice">Макс. цена:</label>
+        <input type="number" id="maxPrice" step="0.01">
+        <button id="applyFilterBtn" class="apply-filter">Применить</button>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/moment"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
 
 <script src="prices.js"></script>
 </body>
