@@ -23,12 +23,12 @@ public class PriceWebSocketHandler implements WebSocketHandler {
     @Override
     public Mono<Void> handle(WebSocketSession session) {
         return session.receive()
-                .map(WebSocketMessage::getPayloadAsText) // Flux<String>
-                .flatMap(symbol -> priceService.streamPricesBySymbol(symbol) // Flux<PriceData>
+                .map(WebSocketMessage::getPayloadAsText)
+                .flatMap(symbol -> priceService.streamPricesBySymbol(symbol)
                         .map(this::toJson)
                         .map(session::textMessage)
                 )
-                .as(session::send); // Отправка данных клиенту
+                .as(session::send);
     }
 
 
